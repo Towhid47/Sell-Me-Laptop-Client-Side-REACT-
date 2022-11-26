@@ -1,12 +1,12 @@
 import React from 'react';
-import Navbar from '../components/Navbar/Navbar.jsx';
+import Navigationbar from '../components/Navbar/Navigationbar.jsx';
 import Footer from '../components/Footer/Footer.jsx';
 import { Outlet } from 'react-router-dom';
 
 const Main = () => {
     return (
         <div>
-            <Navbar></Navbar>
+            <Navigationbar></Navigationbar>
             <Outlet></Outlet>
             <Footer></Footer>
         </div>
