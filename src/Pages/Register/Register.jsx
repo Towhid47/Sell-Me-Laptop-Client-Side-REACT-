@@ -14,6 +14,7 @@ const Register = () => {
         const password = event.target.password.value;
         const photoURL = event.target.photoURL.value;
         const accountType = event.target.select.value;
+        
     }
 
 
@@ -28,7 +29,7 @@ const Register = () => {
         {/* //////////////////////////Registration Form/////////////////// */}
         <div className="w-100 w-lg-50">
           <div>
-            <h1 className="text-center fw-bold">Create A New Account</h1>
+            <h1 className="text-center mb-5 fw-bold">Create A New Account</h1>
           </div>
           <Form onSubmit={handleSubmit} className="text-start form-style">
             <Form.Group className="mb-3" controlId="">
