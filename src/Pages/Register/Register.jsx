@@ -1,11 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import google from '../../assets/images/google.png';
 import Lottie from "lottie-react";
 import registerAnimation from '../../assets/animations/register.json';
 import { Button, Form } from "react-bootstrap";
+import { AuthContext } from "../../AuthContext/auth.context";
+import Swal from "sweetalert2";
 
 const Register = () => {
+
+    const navigate = useNavigate();
+
+    const {signUp} = useContext(AuthContext);
+
+
 
     const handleSubmit = (event) =>{
         event.preventDefault();
@@ -14,6 +22,29 @@ const Register = () => {
         const password = event.target.password.value;
         const photoURL = event.target.photoURL.value;
         const accountType = event.target.select.value;
+
+
+
+        // Create A New Account
+        signUp(email,password)
+        .then(result =>{
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'SignUp Successful',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              event.target.reset();
+              navigate('/login')
+        })
+        .catch(error => Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: "This User Email Already Exist",
+            showConfirmButton: false,
+            timer: 1500
+          }))
         
     }
 
