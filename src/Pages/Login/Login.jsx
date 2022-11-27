@@ -6,6 +6,14 @@ import AnimationLogin from "../../assets/animations/login.json";
 import google from '../../assets/images/google.png';
 
 const Login = () => {
+
+    const handleLogin = (event) =>{
+        event.preventDefault();
+        const email = event.target.email.value;
+        const password = event.target.password.value;
+    }
+
+
   return (
     <div>
       <div className="d-flex flex-lg-row flex-column justify-content-center align-items-center container">
@@ -18,7 +26,7 @@ const Login = () => {
           <div>
             <h1 className="text-center fw-bold">Login</h1>
           </div>
-          <Form className="mt-4 form-style text-start">
+          <Form onSubmit={handleLogin} className="mt-4 form-style text-start">
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label className="fw-semibold fs-3">
                 Email address
