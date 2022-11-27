@@ -1,16 +1,46 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import AnimationLogin from "../../assets/animations/login.json";
 import google from '../../assets/images/google.png';
+import { AuthContext } from "../../AuthContext/auth.context";
+import Swal from "sweetalert2";
 
 const Login = () => {
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
+
+    const {signIn} = useContext(AuthContext);
 
     const handleLogin = (event) =>{
         event.preventDefault();
         const email = event.target.email.value;
         const password = event.target.password.value;
+
+
+        signIn(email,password)
+        .then((result) =>{
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Sign In Successful",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            event.target.reset();
+            navigate(from, {replace: true});
+        })
+        .catch((error)=> Swal.fire({
+            position: "center",
+            icon: "error",
+            title: error.message,
+            showConfirmButton: false,
+            timer: 1500,
+        }))
     }
 
 

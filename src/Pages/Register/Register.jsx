@@ -37,7 +37,7 @@ const Register = () => {
                 timer: 1500
               })
               event.target.reset();
-            //   navigate('/login')
+              navigate('/login');
         })
         .catch(error => Swal.fire({
             position: 'center',
