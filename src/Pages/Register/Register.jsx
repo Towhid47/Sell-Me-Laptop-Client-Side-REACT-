@@ -11,23 +11,24 @@ const Register = () => {
 
     const navigate = useNavigate();
 
-    const {signUp} = useContext(AuthContext);
+    const {signUp, updateUserProfile } = useContext(AuthContext);
 
 
-
+//////////////Event Handler for Reg Form//////////
     const handleSubmit = (event) =>{
         event.preventDefault();
         const name = event.target.name.value;
         const email = event.target.email.value;
         const password = event.target.password.value;
         const photoURL = event.target.photoURL.value;
-        const accountType = event.target.select.value;
+        const role = event.target.select.value;
 
 
 
-        // Create A New Account
+        /////////////////// Create A New Account
         signUp(email,password)
         .then(result =>{
+            userProfile(name,photoURL);
             Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -36,7 +37,7 @@ const Register = () => {
                 timer: 1500
               })
               event.target.reset();
-              navigate('/login')
+            //   navigate('/login')
         })
         .catch(error => Swal.fire({
             position: 'center',
@@ -46,6 +47,18 @@ const Register = () => {
             timer: 1500
           }))
         
+    }
+
+
+    ////////////////////Update Name & Profile Picture
+    const userProfile = (name,photoURL) =>{
+        const profile = {
+            displayName : name ,
+            photoURL : photoURL 
+        }
+        updateUserProfile(profile)
+        .then(()=>{})
+        .catch(error => error.message)
     }
 
 
