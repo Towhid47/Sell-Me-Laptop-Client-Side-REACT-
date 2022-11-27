@@ -1,13 +1,12 @@
 import React from 'react';
-import img from '../../assets/logo/logo.png';
+import img from '../../assets/logo/footer_logo.png';
 import './Footer.css';
 const Footer = () => {
     return (
         <div>
               <div className='bg-black text-center text-light p-5 mt-5'>
             <div className='p-5 mt-5'>
-                <img src={img} alt="" />
-                <h1 className='footer-title mt-3'>SellME Laptop.com</h1>
+                <img src={img} className="" alt="" />
             </div>
             <div className='text-light mt-2'><hr /></div>
             <div className='text-light '>
