@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import google from '../../assets/images/google.png';
+import { Link, useNavigate } from "react-router-dom";
+import googleImg from '../../assets/images/google.png';
+import { GoogleAuthProvider } from "firebase/auth";
 import Lottie from "lottie-react";
 import registerAnimation from '../../assets/animations/register.json';
 import { Button, Form } from "react-bootstrap";
@@ -11,7 +12,7 @@ const Register = () => {
 
     const navigate = useNavigate();
 
-    const {signUp, updateUserProfile } = useContext(AuthContext);
+    const {signUp, updateUserProfile , googleSignUp} = useContext(AuthContext);
 
 
 //////////////Event Handler for Reg Form//////////
@@ -60,7 +61,24 @@ const Register = () => {
         .then(()=>{})
         .catch(error => error.message)
     }
+     
+    ///////////// Google Sign Up //////////
+    const provideGoogle = new GoogleAuthProvider();
 
+    const handleGoogleSignUp = () =>{
+       googleSignUp(provideGoogle) 
+       .then(result =>{
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Google Sign Up Successful',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          navigate('/');
+       })
+       .catch(error => error.message);
+    }
 
 
   return (
@@ -155,11 +173,11 @@ const Register = () => {
             <div className="my-4 text-center">
               <p className="fw-semibold">----Signup with social Accounts----</p>
               <Button
-               
+                onClick={handleGoogleSignUp}
                 className="btn btn-light"
                 title="Signup with Google"
               >
-                <img src={google} className="" alt="" />
+                <img src={googleImg} className="" alt="" />
               </Button>{" "}
               {"  "}
             </div>

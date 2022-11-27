@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react"
 import app from '../firebase/firebase.init.js';
-import {createUserWithEmailAndPassword,signInWithEmailAndPassword,getAuth, onAuthStateChanged, updateProfile} from 'firebase/auth';
+import {createUserWithEmailAndPassword,signInWithPopup,signInWithEmailAndPassword,getAuth, onAuthStateChanged, updateProfile} from 'firebase/auth';
 
 
 
@@ -38,6 +38,14 @@ const AuthProvider = ({children}) =>{
 
 
 
+    //////// Google Sign Up ///////////////
+    const googleSignUp = (provider) =>{
+        setLoad(true);
+        return signInWithPopup(auth,provider);
+    }
+
+
+
     ////// Check whether User is Logged in or not
     useEffect(()=>{
 
@@ -59,7 +67,8 @@ const AuthProvider = ({children}) =>{
         setUser,
         load,
         updateUserProfile,
-        signIn
+        signIn,
+        googleSignUp,
     }
 
 

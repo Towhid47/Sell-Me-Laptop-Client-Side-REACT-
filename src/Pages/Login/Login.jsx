@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
+import { GoogleAuthProvider } from "firebase/auth";
 import AnimationLogin from "../../assets/animations/login.json";
 import google from '../../assets/images/google.png';
 import { AuthContext } from "../../AuthContext/auth.context";
@@ -14,7 +15,7 @@ const Login = () => {
 
     const from = location.state?.from?.pathname || '/';
 
-    const {signIn} = useContext(AuthContext);
+    const {signIn, googleSignUp} = useContext(AuthContext);
 
     const handleLogin = (event) =>{
         event.preventDefault();
@@ -41,6 +42,25 @@ const Login = () => {
             showConfirmButton: false,
             timer: 1500,
         }))
+    }
+
+
+    ////////// Google Sign In /////////////////
+    const provideGoogle = new GoogleAuthProvider();
+
+    const handleGoogleSignUp = () =>{
+       googleSignUp(provideGoogle) 
+       .then(result =>{
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Google Sign Up Successful',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          navigate('/');
+       })
+       .catch(error => error.message);
     }
 
 
@@ -102,7 +122,7 @@ const Login = () => {
 
             <div className="my-4 text-center">
               <p className="fw-semibold">----Signin with social Accounts----</p>
-              <Button  className="btn btn-light" title="SignIn with Google">
+              <Button onClick={handleGoogleSignUp} className="btn btn-light" title="SignIn with Google">
                 <img src={google} className="" alt="" />
               </Button>{" "}
               {"  "}
