@@ -8,6 +8,7 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import PrivateRoute from "./Private_Routes/PrivateRoute";
 import { Button } from "react-bootstrap";
+import BrandProducts from "../Pages/BrandProducts/BrandProducts";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+         path: '/brand/:id',
+         element:<BrandProducts></BrandProducts>
+      }
     ],
   },
   {
