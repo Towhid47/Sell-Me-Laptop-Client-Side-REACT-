@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import error from "../assets/animations/Error404.json";
+import error404 from "../assets/animations/Error404.json";
 import { createBrowserRouter, Link } from "react-router-dom";
 import Main from "../layouts/Main";
 import Dashboard from "../Pages/Dashboard/Dashboard/Dashboard";
@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
     element: (
       <div>
         <div>
-          <Lottie className="w-75" animationData={error}></Lottie>
+          <Lottie className="w-75" animationData={error404}></Lottie>
         </div>
          <div className="text-center mb-5">
           <Link to="/">
