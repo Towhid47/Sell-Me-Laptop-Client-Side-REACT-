@@ -40,6 +40,7 @@ const Navigationbar = () => {
               (user?.email) ?
                      <div className='d-lg-flex justify-content-between flex-column flex-lg-row'>
                         <NavLink to="/dashboard" className="text-decoration-none fs-4 mx-3 text-black fw-semibold item">Dashboard</NavLink>
+                        <NavLink to="/add-product" className="text-decoration-none fs-4 mx-3 text-black fw-semibold item">Add Product</NavLink>
                         <div className="text-decoration-none fs-4 mx-3 text-black fw-semibold item"><Button className='btn-light fs-5 fw-semibold' onClick={handleSignOut}>Logout <FontAwesomeIcon icon={faArrowRightFromBracket} /></Button></div> 
                         <div> <Link to="" title={user.displayName}><img className='w-75 rounded-circle' src={user.photoURL} alt=""></img></Link> </div>
                      </div>

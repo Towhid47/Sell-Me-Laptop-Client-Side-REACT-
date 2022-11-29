@@ -1,23 +1,46 @@
 import React from "react";
 import { Button, Form } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 const AddProduct = () => {
 
     const handleAddProduct = (event) =>{
         event.preventDefault();
 
-        const product_name = event.target.name.value;
+        const product_name = event.target.product_name.value;
         const brand = event.target.brand.value;  
         const picture = event.target.image.value; 
-        const resale_price = event.target.price.value;
+        const resale_price = event.target.resale_price.value;
+        const original_price = event.target.original_price.value;
+        const seller_name = event.target.seller_name.value;
         const mobile_number = event.target.mobile.value;
         const seller_email = event.target.email.value;
         const description = event.target.description.value;
         const location = event.target.location.value;
         const year_of_purchased = event.target.year_of_purchase.value;
         const condition = event.target.select.value;
-        console.log(condition);
-    
+        
+        const product = {product_name, seller_name , original_price , brand, location,  year_of_purchased, condition , picture, resale_price,mobile_number, seller_email, description,  }
+   
+        fetch('http://localhost:4000/products',{
+            method:'POST',
+            headers:{
+                'content-type':'application/json'
+            },
+            body: JSON.stringify(product)
+        })
+        .then(res=>res.json())
+        .then(data =>{
+            event.target.reset();
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Product Added Successfully',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              
+        })
     }
 
 
@@ -34,7 +57,7 @@ const AddProduct = () => {
               <Form.Label className="text-color fs-4 fw-semibold">
                 Product Name
               </Form.Label>
-              <Form.Control name="name" type="text" placeholder="Product Name" />
+              <Form.Control name="product_name" type="text" placeholder="Product Name" />
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -59,12 +82,34 @@ const AddProduct = () => {
 
             <Form.Group className="mb-3">
               <Form.Label className="text-color fs-4 fw-semibold">
-                Price
+               Resale Price
               </Form.Label>
               <Form.Control
-                name="price"
+                name="resale_price"
                 type="text"
-                placeholder="Enter the product price"
+                placeholder="Enter product resale price"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="text-color fs-4 fw-semibold">
+               Original Price
+              </Form.Label>
+              <Form.Control
+                name="original_price"
+                type="text"
+                placeholder="Enter product's Original price"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="text-color fs-4 fw-semibold">
+                Your Name
+              </Form.Label>
+              <Form.Control
+                name="seller_name"
+                type="text"
+                placeholder="Enter Your Name"
               />
             </Form.Group>
 
@@ -138,6 +183,11 @@ const AddProduct = () => {
             <div className="text-center">
               <Button className="w-50 p-3 fs-4" type="submit">
                 Add Product
+              </Button>
+            </div>
+            <div className="text-center my-3">
+              <Button className="w-50 p-3 btn-light fs-4" type="reset">
+                Reset Product Info
               </Button>
             </div>
           </Form>
