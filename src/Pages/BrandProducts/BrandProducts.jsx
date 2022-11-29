@@ -13,8 +13,8 @@ const BrandProducts = () => {
             {
                 productCards.map(productCard => <ProductCard key={productCard._id} productCard={productCard}></ProductCard>)
             }
-             
         </div>
+    
     );
 };
 
