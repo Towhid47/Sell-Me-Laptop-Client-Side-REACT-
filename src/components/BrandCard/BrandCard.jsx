@@ -8,7 +8,7 @@ const BrandCard = ({brand}) => {
 
     return (
         <div>
-        <Link to={`brand/${_id}`} className="text-decoration-none text-black">
+        <Link to={`brand/${brand_name}`} className="text-decoration-none text-black">
         <Card className='border-0 shadow p-3 mb-5 bg-body rounded-4' style={{ width: "18rem" }}>
           <Card.Img  src={image} />
           <Card.Body>
