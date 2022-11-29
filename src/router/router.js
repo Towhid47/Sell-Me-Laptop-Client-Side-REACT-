@@ -9,6 +9,7 @@ import Register from "../Pages/Register/Register";
 import PrivateRoute from "./Private_Routes/PrivateRoute";
 import { Button } from "react-bootstrap";
 import BrandProducts from "../Pages/BrandProducts/BrandProducts";
+import AddProduct from "../Pages/AddProduct/AddProduct";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
          path: '/brand/:name',
          element:<PrivateRoute><BrandProducts></BrandProducts></PrivateRoute>,
          loader:({params}) => fetch(`http://localhost:4000/category/${params.name}`) ,
+      },
+      {
+        path:'/add-product',
+        element:<PrivateRoute><AddProduct></AddProduct></PrivateRoute>
       }
     ],
   },
