@@ -2,12 +2,34 @@ import React from "react";
 import { Button, Form } from "react-bootstrap";
 
 const AddProduct = () => {
+
+    const handleAddProduct = (event) =>{
+        event.preventDefault();
+
+        const product_name = event.target.name.value;
+        const brand = event.target.brand.value;  
+        const picture = event.target.image.value; 
+        const resale_price = event.target.price.value;
+        const mobile_number = event.target.mobile.value;
+        const seller_email = event.target.email.value;
+        const description = event.target.description.value;
+        const location = event.target.location.value;
+        const year_of_purchased = event.target.year_of_purchase.value;
+        const condition = event.target.select.value;
+        console.log(condition);
+    
+    }
+
+
+
+
+
   return (
     <div>
       <div className="d-flex justify-content-center">
         <div className="container shadow-lg p-3 mb-5 bg-body rounded">
           <h1 className="text-primary">Add Product</h1>
-          <Form className="text-start">
+          <Form onSubmit={handleAddProduct} className="text-start">
             <Form.Group className="mb-3">
               <Form.Label className="text-color fs-4 fw-semibold">
                 Product Name
@@ -51,7 +73,7 @@ const AddProduct = () => {
                 Mobile Number
               </Form.Label>
               <Form.Control
-                name="Mobile"
+                name="mobile"
                 type="text"
                 placeholder="Enter your Contact Number"
               />
