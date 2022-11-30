@@ -3,49 +3,56 @@ import { Button, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
 
 const AddProduct = () => {
+  const handleAddProduct = (event) => {
+    event.preventDefault();
 
-    const handleAddProduct = (event) =>{
-        event.preventDefault();
+    const product_name = event.target.product_name.value;
+    const brand = event.target.brand.value;
+    const picture = event.target.image.value;
+    const resale_price = event.target.resale_price.value;
+    const original_price = event.target.original_price.value;
+    const seller_name = event.target.seller_name.value;
+    const mobile_number = event.target.mobile.value;
+    const seller_email = event.target.email.value;
+    const description = event.target.description.value;
+    const location = event.target.location.value;
+    const year_of_purchased = event.target.year_of_purchase.value;
+    const condition = event.target.select.value;
 
-        const product_name = event.target.product_name.value;
-        const brand = event.target.brand.value;  
-        const picture = event.target.image.value; 
-        const resale_price = event.target.resale_price.value;
-        const original_price = event.target.original_price.value;
-        const seller_name = event.target.seller_name.value;
-        const mobile_number = event.target.mobile.value;
-        const seller_email = event.target.email.value;
-        const description = event.target.description.value;
-        const location = event.target.location.value;
-        const year_of_purchased = event.target.year_of_purchase.value;
-        const condition = event.target.select.value;
-        
-        const product = {product_name, seller_name , original_price , brand, location,  year_of_purchased, condition , picture, resale_price,mobile_number, seller_email, description,  }
-   
-        fetch('http://localhost:4000/products',{
-            method:'POST',
-            headers:{
-                'content-type':'application/json'
-            },
-            body: JSON.stringify(product)
-        })
-        .then(res=>res.json())
-        .then(data =>{
-            event.target.reset();
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Product Added Successfully',
-                showConfirmButton: false,
-                timer: 1500
-              })
-              
-        })
-    }
+    const product = {
+      product_name,
+      seller_name,
+      original_price,
+      brand,
+      location,
+      year_of_purchased,
+      condition,
+      picture,
+      resale_price,
+      mobile_number,
+      seller_email,
+      description,
+    };
 
-
-
-
+    fetch("https://sell-me-laptop-server.vercel.app/products", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(product),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        event.target.reset();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Product Added Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
 
   return (
     <div>
@@ -57,21 +64,25 @@ const AddProduct = () => {
               <Form.Label className="text-color fs-4 fw-semibold">
                 Product Name
               </Form.Label>
-              <Form.Control name="product_name" type="text" placeholder="Product Name" />
+              <Form.Control
+                name="product_name"
+                type="text"
+                placeholder="Product Name"
+              />
             </Form.Group>
 
             <Form.Group className="mb-3">
-               <Form.Label className="fw-semibold fs-3">Brand</Form.Label>
-               <Form.Select name="brand" aria-label="Default select example">
-                    <option value="asus">Asus</option>
-                    <option value="dell">Dell</option>
-                    <option value="hp">HP</option>
-               </Form.Select> 
+              <Form.Label className="fw-semibold fs-3">Brand</Form.Label>
+              <Form.Select name="brand" aria-label="Default select example">
+                <option value="asus">Asus</option>
+                <option value="dell">Dell</option>
+                <option value="hp">HP</option>
+              </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label className="text-color fs-4 fw-semibold">
-               Product Image
+                Product Image
               </Form.Label>
               <Form.Control
                 name="image"
@@ -82,7 +93,7 @@ const AddProduct = () => {
 
             <Form.Group className="mb-3">
               <Form.Label className="text-color fs-4 fw-semibold">
-               Resale Price
+                Resale Price
               </Form.Label>
               <Form.Control
                 name="resale_price"
@@ -93,7 +104,7 @@ const AddProduct = () => {
 
             <Form.Group className="mb-3">
               <Form.Label className="text-color fs-4 fw-semibold">
-               Original Price
+                Original Price
               </Form.Label>
               <Form.Control
                 name="original_price"
@@ -122,7 +133,7 @@ const AddProduct = () => {
                 type="text"
                 placeholder="Enter your Contact Number"
               />
-              </Form.Group>
+            </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label className="text-color fs-4 fw-semibold">
@@ -133,8 +144,7 @@ const AddProduct = () => {
                 type="email"
                 placeholder="Enter your Email as a Seller"
               />
-              </Form.Group>
-              
+            </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label className="text-color fs-4 fw-semibold">
@@ -158,7 +168,7 @@ const AddProduct = () => {
                 placeholder="Enter current location"
               />
             </Form.Group>
-            
+
             <Form.Group className="mb-3">
               <Form.Label className="text-color fs-4 fw-semibold">
                 Enter When you purchased this product
@@ -171,14 +181,15 @@ const AddProduct = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-               <Form.Label className="fw-semibold fs-3">Product Condition Type</Form.Label>
-               <Form.Select name="select" aria-label="Default select example">
-                    <option value="fair">Fair</option>
-                    <option value="good">Good</option>
-                    <option value="excellent">Excellent</option>
-               </Form.Select> 
+              <Form.Label className="fw-semibold fs-3">
+                Product Condition Type
+              </Form.Label>
+              <Form.Select name="select" aria-label="Default select example">
+                <option value="fair">Fair</option>
+                <option value="good">Good</option>
+                <option value="excellent">Excellent</option>
+              </Form.Select>
             </Form.Group>
-
 
             <div className="text-center">
               <Button className="w-50 p-3 fs-4" type="submit">

@@ -1,85 +1,95 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import googleImg from '../../assets/images/google.png';
+import googleImg from "../../assets/images/google.png";
 import { GoogleAuthProvider } from "firebase/auth";
 import Lottie from "lottie-react";
-import registerAnimation from '../../assets/animations/register.json';
+import registerAnimation from "../../assets/animations/register.json";
 import { Button, Form } from "react-bootstrap";
 import { AuthContext } from "../../AuthContext/auth.context";
 import Swal from "sweetalert2";
 
 const Register = () => {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const { signUp, updateUserProfile, googleSignUp } = useContext(AuthContext);
 
-    const {signUp, updateUserProfile , googleSignUp} = useContext(AuthContext);
+  //////////////Event Handler for Reg Form//////////
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const name = event.target.name.value;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    const photoURL = event.target.photoURL.value;
+    const accountType = event.target.select.value;
 
+    const userDB = { name, email, accountType };
 
-//////////////Event Handler for Reg Form//////////
-    const handleSubmit = (event) =>{
-        event.preventDefault();
-        const name = event.target.name.value;
-        const email = event.target.email.value;
-        const password = event.target.password.value;
-        const photoURL = event.target.photoURL.value;
-        const role = event.target.select.value;
+    console.log(userDB);
 
+    ////////Send userDB to Server to Store it in MongoDB users collection///////
+    fetch("https://sell-me-laptop-server.vercel.app/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(userDB),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
 
-
-        /////////////////// Create A New Account
-        signUp(email,password)
-        .then(result =>{
-            userProfile(name,photoURL);
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'SignUp Successful',
-                showConfirmButton: false,
-                timer: 1500
-              })
-              event.target.reset();
-              navigate('/login');
+    /////////////////// Create A New Account
+    signUp(email, password)
+      .then((result) => {
+        userProfile(name, photoURL);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "SignUp Successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        event.target.reset();
+        navigate("/login");
+      })
+      .catch((error) =>
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "This User Email Already Exist",
+          showConfirmButton: false,
+          timer: 1500,
         })
-        .catch(error => Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: "This User Email Already Exist",
-            showConfirmButton: false,
-            timer: 1500
-          }))
-        
-    }
+      );
+  };
 
+  ////////////////////Update Name & Profile Picture
+  const userProfile = (name, photoURL) => {
+    const profile = {
+      displayName: name,
+      photoURL: photoURL,
+    };
+    updateUserProfile(profile)
+      .then(() => {})
+      .catch((error) => error.message);
+  };
 
-    ////////////////////Update Name & Profile Picture
-    const userProfile = (name,photoURL) =>{
-        const profile = {
-            displayName : name ,
-            photoURL : photoURL 
-        }
-        updateUserProfile(profile)
-        .then(()=>{})
-        .catch(error => error.message)
-    }
-     
-    ///////////// Google Sign Up //////////
-    const provideGoogle = new GoogleAuthProvider();
+  ///////////// Google Sign Up //////////
+  const provideGoogle = new GoogleAuthProvider();
 
-    const handleGoogleSignUp = () =>{
-       googleSignUp(provideGoogle) 
-       .then(result =>{
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Google Sign Up Successful',
-            showConfirmButton: false,
-            timer: 1500
-          })
-          navigate('/');
-       })
-       .catch(error => error.message);
-    }
-
+  const handleGoogleSignUp = () => {
+    googleSignUp(provideGoogle)
+      .then((result) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Google Sign Up Successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => error.message);
+  };
 
   return (
     <div>
@@ -147,11 +157,13 @@ const Register = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-               <Form.Label className="fw-semibold fs-3">Select Account Type</Form.Label>
-               <Form.Select name="select" aria-label="Default select example">
-                    <option value="buyer">default</option>
-                    <option value="seller">seller</option>
-               </Form.Select> 
+              <Form.Label className="fw-semibold fs-3">
+                Select Account Type
+              </Form.Label>
+              <Form.Select name="select" aria-label="Default select example">
+                <option value="buyer">default</option>
+                <option value="seller">seller</option>
+              </Form.Select>
             </Form.Group>
 
             <input
@@ -159,7 +171,7 @@ const Register = () => {
               className="btn w-100 btn-primary"
               value="Sign Up"
             ></input>
-            
+
             <p className="my-2 fw-semibold">
               Already Have an Account ?{" "}
               <span>
@@ -181,7 +193,6 @@ const Register = () => {
               </Button>{" "}
               {"  "}
             </div>
-            
           </Form>
         </div>
       </div>

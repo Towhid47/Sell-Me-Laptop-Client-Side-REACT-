@@ -12,6 +12,7 @@ import BrandProducts from "../Pages/BrandProducts/BrandProducts";
 import AddProduct from "../Pages/AddProduct/AddProduct";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyOrders from "../Pages/Dashboard/Dashboard/MyOrders/MyOrders";
+import Blogs from "../Pages/Blogs/Blogs";
 
 export const router = createBrowserRouter([
   {
@@ -31,28 +32,43 @@ export const router = createBrowserRouter([
         element: <Register></Register>,
       },
       {
+        path: "/blogs",
+        element: <Blogs></Blogs>,
+      },
+      {
         path: "/dashboard",
         element: (
           <PrivateRoute>
             <DashboardLayout></DashboardLayout>
           </PrivateRoute>
         ),
-        children:[
-           {
-             path:'/dashboard',
-             element:<MyOrders></MyOrders>
-           }
-        ]
+        children: [
+          {
+            path: "/dashboard",
+            element: <MyOrders></MyOrders>,
+          },
+        ],
       },
       {
-         path: '/brand/:name',
-         element:<PrivateRoute><BrandProducts></BrandProducts></PrivateRoute>,
-         loader:({params}) => fetch(`http://localhost:4000/category/${params.name}`) ,
+        path: "/brand/:name",
+        element: (
+          <PrivateRoute>
+            <BrandProducts></BrandProducts>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `https://sell-me-laptop-server.vercel.app/category/${params.name}`
+          ),
       },
       {
-        path:'/add-product',
-        element:<PrivateRoute><AddProduct></AddProduct></PrivateRoute>
-      }
+        path: "/add-product",
+        element: (
+          <PrivateRoute>
+            <AddProduct></AddProduct>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
@@ -62,7 +78,7 @@ export const router = createBrowserRouter([
         <div>
           <Lottie className="w-75" animationData={error404}></Lottie>
         </div>
-         <div className="text-center mb-5">
+        <div className="text-center mb-5">
           <Link to="/">
             <Button className="btn btn-primary">Go Back To Homepage</Button>
           </Link>
