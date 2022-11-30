@@ -12,6 +12,24 @@ const ProductCard = ({productCard}) => {
 
     const {user} = useContext(AuthContext);
 
+    const  buyer_email = user.email;
+    const  buyer_name = user.displayName;
+
+    ///////////////////////////////////////////////
+    ///    Get the Current Date of Order
+    //////////////////////////////////////////////
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+
+    today = dd + '/' + mm +  '/' + yyyy;
+
+    const order_date = today;
+    
+
+    
+
     /////////////////////////////////////////////
     ////     Handle Showing Modal
     ///////////////////////////////////////////
@@ -27,19 +45,32 @@ const ProductCard = ({productCard}) => {
    const handlePlaceOrder = (event) =>{
     event.preventDefault();
 
-    const phone = event.target.phone.value;
-    const location = event.target.location.value;
+    const buyer_phone = event.target.phone.value;
+    const buyer_location = event.target.location.value;
      
-    console.log(phone,location);
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Order Placed Successfully, Thank you so much!',
-      showConfirmButton: false,
-      timer: 1500
-    })
+    const order = {buyer_phone, buyer_name , order_date , buyer_location, buyer_email, product_name , picture, brand , resale_price, seller_name , seller_email };
+
+      /////////// Sending The Order Data to the Server to store it in MongoDB Orders Collection /////////////////////////////////
+      fetch('http://localhost:4000/orders',{
+          method:'POST',
+          headers :{
+            'content-type' : 'application/json'
+          },
+          body: JSON.stringify(order)
+      })
+      .then(res => res.json())
+      .then(data => {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Placed order Successfully, Thank you so much',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      })
    }
 
+   
 
 
   return (
@@ -76,8 +107,8 @@ const ProductCard = ({productCard}) => {
                     <hr />
                     <hr />
                     <div className="d-flex justify-content-between mt-5">
-                         <div className="w-50"><p className="fs-4 ">Product Name :</p><p className="fs-5">{product_name}</p></div>
-                         <div><p className="fs-4 ">Price : </p> <p className="fs-5">{resale_price}$</p></div>
+                         <div className="w-50"><p className="fs-4 fw-semibold">Product Name :</p><p className="fs-5">{product_name}</p></div>
+                         <div><p className="fs-4 fw-semibold">Price : </p> <p className="fs-5">{resale_price}$</p></div>
                     </div>
                     <div className="bg-dark text-light p-4">
                         <h3 className="text-center">User Information:</h3> 

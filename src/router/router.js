@@ -10,6 +10,8 @@ import PrivateRoute from "./Private_Routes/PrivateRoute";
 import { Button } from "react-bootstrap";
 import BrandProducts from "../Pages/BrandProducts/BrandProducts";
 import AddProduct from "../Pages/AddProduct/AddProduct";
+import DashboardLayout from "../layouts/DashboardLayout";
+import MyOrders from "../Pages/Dashboard/Dashboard/MyOrders/MyOrders";
 
 export const router = createBrowserRouter([
   {
@@ -32,9 +34,15 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         element: (
           <PrivateRoute>
-            <Dashboard></Dashboard>
+            <DashboardLayout></DashboardLayout>
           </PrivateRoute>
         ),
+        children:[
+           {
+             path:'/dashboard',
+             element:<MyOrders></MyOrders>
+           }
+        ]
       },
       {
          path: '/brand/:name',
