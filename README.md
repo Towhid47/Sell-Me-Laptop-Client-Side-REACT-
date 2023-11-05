@@ -1,5 +1,5 @@
 
-# Project Name : Sell-Me-Laptop.com
+# Sell-Me-Laptop.com
 This is a Resale Laptop Online Market Platform Website. This website provides a lot of used Laptops. Mainly 3 brands of laptops are sale here : they are ASUS , HP & DELL . It helps to inform the customers about Laptop Details and Prices. User can be able to Place Order , and can Add products to sale his own used laptops  . We are Trying to improve ourselves and will try to add more Features in this Website.
 
 
